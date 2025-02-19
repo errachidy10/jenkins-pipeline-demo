@@ -6,7 +6,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+        string(name: 'main', defaultValue: 'main', description: 'Branch to build')
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 checkout scm: [
                     $class: 'GitSCM',
-                    branches: [[name: "*/${params.BRANCH_NAME}"]],
+                    branches: [[name: "*/${params.main}"]],
                     userRemoteConfigs: [[url: 'https://github.com/errachidy10/jenkins-pipeline-demo.git']]
                 ]
             }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists('pom.xml')) {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     } else {
                         echo 'No pom.xml found, skipping build'
                     }
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists('pom.xml')) {
-                        sh 'mvn test'
+                        bat 'mvn test'
                     } else {
                         echo 'No pom.xml found, skipping tests'
                     }
@@ -46,7 +46,7 @@ pipeline {
                 script {
                     if (fileExists('pom.xml')) {
                         withSonarQubeEnv('SonarQube-Server') {
-                            sh 'mvn sonar:sonar'
+                            bat 'mvn sonar:sonar'
                         }
                     } else {
                         echo 'No pom.xml found, skipping SonarQube analysis'
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     // Déploiement sur un serveur (par exemple, via SCP ou rsync)
-                    sh 'scp target/your-app.jar user@server:/path/to/deploy/'
+                    bat 'echo Déploiement simulé'
                 }
             }
         }
