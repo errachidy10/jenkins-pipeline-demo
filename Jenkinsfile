@@ -18,8 +18,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    if (fileExists('HelloWorld.java')) {
-                        bat 'javac HelloWorld.java'
+                    if (fileExists('App.java')) {
+                        bat 'javac App.java'
                     } else {
                         echo 'No HelloWorld.java found, skipping build'
                     }
@@ -29,7 +29,7 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    if (fileExists('HelloWorld.class')) {
+                    if (fileExists('App.class')) {
                         bat 'java HelloWorld'
                     } else {
                         echo 'No HelloWorld.class found, skipping run'
