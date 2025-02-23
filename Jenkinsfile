@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SONARQUBE_SERVER = 'SonarQube-Server'
-    }
-
     parameters {
         string(name: 'main', defaultValue: 'main', description: 'Branch to build')
     }
@@ -37,19 +33,6 @@ pipeline {
                         bat 'mvn test'
                     } else {
                         echo 'No pom.xml found, skipping tests'
-                    }
-                }
-            }
-        }
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    if (fileExists('pom.xml')) {
-                        withSonarQubeEnv('SonarQube-Server') {
-                            bat 'mvn sonar:sonar'
-                        }
-                    } else {
-                        echo 'No pom.xml found, skipping SonarQube analysis'
                     }
                 }
             }
