@@ -18,30 +18,22 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    if (fileExists('pom.xml')) {
-                        bat 'mvn clean install'
+                    if (fileExists('HelloWorld.java')) {
+                        bat 'javac HelloWorld.java'
                     } else {
-                        echo 'No pom.xml found, skipping build'
+                        echo 'No HelloWorld.java found, skipping build'
                     }
                 }
             }
         }
-        stage('Test') {
+        stage('Run') {
             steps {
                 script {
-                    if (fileExists('pom.xml')) {
-                        bat 'mvn test'
+                    if (fileExists('HelloWorld.class')) {
+                        bat 'java HelloWorld'
                     } else {
-                        echo 'No pom.xml found, skipping tests'
+                        echo 'No HelloWorld.class found, skipping run'
                     }
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    // Déploiement sur un serveur (par exemple, via SCP ou rsync)
-                    bat 'echo Déploiement simulé'
                 }
             }
         }
