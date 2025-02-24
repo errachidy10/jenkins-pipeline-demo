@@ -18,8 +18,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    if (fileExists('App.java')) {
-                        bat 'javac App.java'
+                    if (fileExists('src/main/java/com/example/App.java')) {
+                        bat 'javac src/main/java/com/example/App.java'
                     } else {
                         echo 'No App.java found, skipping build'
                     }
@@ -29,8 +29,8 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    if (fileExists('App.class')) {
-                        bat 'java App'
+                    if (fileExists('src/main/java/com/example/App.class')) {
+                        bat 'java -cp src/main/java com.example.App'
                     } else {
                         echo 'No App.class found, skipping run'
                     }
